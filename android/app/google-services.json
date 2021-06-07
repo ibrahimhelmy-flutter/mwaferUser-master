@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "152120999176",
+    "project_id": "mwafer-b8c94",
+    "storage_bucket": "mwafer-b8c94.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152120999176:android:70703f6819cdb80b8400bd",
+        "android_client_info": {
+          "package_name": "com.offer.mwafer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "152120999176-0kvhcn1b2r76oasm2iluf486fki2vbfo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.offer.mwafer",
+            "certificate_hash": "41ac98142c088c3c0be9673de717cb518292f37c"
+          }
+        },
+        {
+          "client_id": "152120999176-f3uoae1kab7k36p2c16n0pakiiv6buue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6yM8kTwuibeSUTtN2njlDZwAHKheNtcE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "152120999176-f3uoae1kab7k36p2c16n0pakiiv6buue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
