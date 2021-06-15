@@ -48,7 +48,7 @@ class _IntroScreenState extends State<IntroScreen>
         PageViewModel(
           title: "وفر قريشاتك",
           body: "مرحبا بك بتطبيق وفر قريشاتك",
-          image: _buildImage('logo'),
+          image: _buildImage('adobespark'),
           decoration: pageDecoration,
         ),
         PageViewModel(

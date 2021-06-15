@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mwafer/Offers/data_base/product_database.dart';
+import 'package:mwafer/widget/buildProductRow.dart';
 import '../../HomePage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -38,6 +40,7 @@ class _OffersState extends State<Offers> {
   bool loading = false;
   bool allselected = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   // ignore: must_call_super
   void initState() {
@@ -95,8 +98,7 @@ class _OffersState extends State<Offers> {
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomePage()));
+                                            builder: (context) => HomePage()));
                                   },
                                   icon: Icon(
                                     Icons.arrow_back_rounded,
@@ -137,121 +139,19 @@ class _OffersState extends State<Offers> {
                                 ),
                               );
                             } else if (snapshot.hasData)
-
                               return ListView.builder(
-                                  //shrinkWrap: true,
-                           //     primary:true,
-                                  physics:const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()) ,
-                                  scrollDirection: Axis.horizontal,
+                                  physics: NeverScrollableScrollPhysics(),
                                   itemCount: snapshot.data.length,
-                                  itemBuilder: (context,index) {
-                                    return Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Card(
-                                          elevation: 18.0,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                                          child: Image.network(
-                                            snapshot.data[index]["images url"][0],
-                                            fit: BoxFit.contain,
-                                            height: 200.0,
-                                            width: 130.0,
-                                          ),
-                                          clipBehavior: Clip.antiAlias,
-                                          margin: EdgeInsets.all(8.0),
-                                        ),
-                                        Text(
-                                          snapshot.data[index]["name"],
-                                          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                                        )
-                                      ],
+                                  itemBuilder: (context, index) {
+                                    print(snapshot.data[index]["price"]);
+                                    return MyOfferCard(
+                                      img: snapshot.data[index]["images url"]
+                                          [0],
+                                      txt: snapshot.data[index]["name"],
+                                      des: snapshot.data[index]['des'],
                                     );
                                   });
 
-
-                              // return ListView.builder(
-                              //   controller: controller,
-                              //   itemBuilder: ((context, index) {
-                              //     return Padding(
-                              //       padding: const EdgeInsets.all(10.0),
-                              //       child: InkWell(
-                              //         onTap: () {
-                              //           launchURL(
-                              //               snapshot.data[index]["price"]);
-                              //           print(snapshot.data[index]["price"]);
-                              //         },
-                              //         child: Card(
-                              //           shape: RoundedRectangleBorder(
-                              //               borderRadius:
-                              //                   BorderRadius.circular(25)),
-                              //           elevation: 15,
-                              //           child: Container(
-                              //             width: width * 0.9,
-                              //             height: height * 0.25,
-                              //             alignment: Alignment.center,
-                              //             decoration: BoxDecoration(
-                              //                 borderRadius:
-                              //                     BorderRadius.circular(40),
-                              //                 image: DecorationImage(
-                              //                   image:  NetworkImage(
-                              //                     snapshot.data[index]
-                              //                     ["images url"][0],
-                              //
-                              //                   ),  fit: BoxFit.fitHeight,
-                              //                 )),
-                              //             child: Padding(
-                              //               padding: EdgeInsets.all(20.0),
-                              //               child: Column(
-                              //                 children: [
-                              //                   Row(
-                              //                     mainAxisAlignment:
-                              //                         MainAxisAlignment
-                              //                             .spaceBetween,
-                              //                     children: [
-                              //                       Container(
-                              //                         decoration: BoxDecoration(
-                              //                           color: Colors.black,
-                              //                           borderRadius:
-                              //                               BorderRadius
-                              //                                   .circular(20),
-                              //                         ),
-                              //                         height: height * 0.08,
-                              //                         width: width * 0.8,
-                              //                         child: Center(
-                              //                           child: Image.network(
-                              //                             snapshot.data[index]
-                              //                                 ["images url"][0],
-                              //                             fit: BoxFit.fill,
-                              //                           ),
-                              //                         ),
-                              //                       ),
-                              //                     ],
-                              //                   ),
-                              //                   SizedBox(
-                              //                     height: height * 0.03,
-                              //                   ),
-                              //                   Text(
-                              //                     snapshot.data[index]["name"],
-                              //                     style: TextStyle(
-                              //                       fontWeight: FontWeight.bold,
-                              //                       fontSize: 30,
-                              //                     ),
-                              //                   ),
-                              //                   SizedBox(
-                              //                     height: height * 0.01,
-                              //                   ),
-                              //                 ],
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ),
-                              //     );
-                              //   }),
-                              //   itemCount: snapshot.data.length,
-                              // );
                           } else if (snapshot.hasError) {
                             return Center(
                               child:
@@ -290,6 +190,7 @@ class _OffersState extends State<Offers> {
       });
     }
   }
+
   // end select all
   //********************************************************************
   // start change cat and change brand
@@ -378,15 +279,47 @@ class _OffersState extends State<Offers> {
       suggestionsCallback: (pattern) async {
         return await ProductDatabase().getSuggestions(pattern);
       },
+
+        // itemBuilder: (context, DocumentSnapshot suggestion) {
+        //   return Container(
+        //     height: MediaQuery.of(context).size.height * 0.32,
+        //     child: ListView.builder(
+        //      //   controller: controller2,
+        //         physics: NeverScrollableScrollPhysics(),
+        //         itemCount: 1,
+        //         itemBuilder: (context, index) {
+        //           return MyOfferCard(
+        //             img: suggestion['images url'][0],
+        //             txt: suggestion['name'],
+        //             des: "lll",
+        //             // catDes: suggestion['catdes'],
+        //             // categorie: suggestion['categorie'],
+        //             // docId: suggestion.documentID,
+        //           );
+        //         }),
+        //   );},
+
       itemBuilder: (context, suggestion) {
-        return ListTile(
-          leading: Icon(
-            Icons.shopping_cart,
-            color: Colors.red,
-          ),
-          title: Text(suggestion['name']),
-          subtitle: Text('\$${suggestion['price']}'),
-        );
+        // return ListTile(
+        //   leading: Icon(
+        //     Icons.shopping_cart,
+        //     color: Colors.red,
+        //   ),
+        //   title: Text(suggestion['name']),
+        //   subtitle: Text('\$${suggestion['price']}'),
+        // );
+        //
+
+     return   BuildProductRow(suggestion["name"],suggestion["images url"][0]);
+
+        // return MyOfferCard(
+        //   img: suggestion["images url"]
+        //   [0],
+        //   txt: suggestion["name"],
+        //   des: suggestion['des'],
+        // );
+
+
       },
       onSuggestionSelected: (suggestion) {
         showMenu(
@@ -491,4 +424,33 @@ class _OffersState extends State<Offers> {
     }
   }
 // end change check
+}
+
+class MyOfferCard extends StatefulWidget {
+  final String img;
+  final String txt;
+  final String des;
+
+  const MyOfferCard({Key key, this.img, this.txt, this.des}) : super(key: key);
+
+  @override
+  _MyOfferCardState createState() => _MyOfferCardState();
+}
+
+class _MyOfferCardState extends State<MyOfferCard> {
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    return InkWell(
+      onTap: () =>
+
+        launch(widget.img)
+     ,
+      child: BuildProductRow(widget.txt,widget.img),
+    );
+
+  }
+
+
 }

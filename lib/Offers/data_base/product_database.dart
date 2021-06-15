@@ -94,13 +94,22 @@ class ProductDatabase
   // end getAll products
   //****************************************************************
   // start get suggestions
+  // Future<List<DocumentSnapshot>> getSuggestionscategoies(String pattern) async
+  // {
+  //   List<DocumentSnapshot> documentSnapshot;
+  //   QuerySnapshot querytSnapshot = await Firestore.instance.collection("categories").where("category",isEqualTo: pattern).getDocuments();
+  //   //documentSnapshot = querytSnapshot.documents;
+  //   return querytSnapshot.documents;
+  // }
+
   Future<List<DocumentSnapshot>> getSuggestions(String pattern) async
   {
     List<DocumentSnapshot> documentSnapshot;
     QuerySnapshot querytSnapshot = await Firestore.instance.collection("products").where("name",isEqualTo: pattern).getDocuments();
-    documentSnapshot = querytSnapshot.documents;
-    return documentSnapshot;
+ //   documentSnapshot = querytSnapshot.documents;
+    return querytSnapshot.documents;
   }
+
   // end get suggestions
   //****************************************************************
   // start delete products

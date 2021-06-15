@@ -17,7 +17,11 @@ class CATDatabse {
     List<DocumentSnapshot> documentSnapshot;
     QuerySnapshot querytSnapshot = await Firestore.instance
         .collection("categories")
-        .where("category", isGreaterThanOrEqualTo: pattern)
+     //   .where("category", isEqualTo:  [pattern])
+        .where('category', isGreaterThanOrEqualTo: pattern)
+      //  .where('category', isLessThan: pattern +'z')
+        .where('category', isLessThan: pattern +'ي')
+
         .getDocuments();
     documentSnapshot = querytSnapshot.documents;
 

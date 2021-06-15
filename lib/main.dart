@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
         title: '',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData.light(),
+        theme: ThemeData.light().copyWith(primaryColor: Color(0xff017967)),
         initialRoute: initScreen == 0 || initScreen == null ? "first" : "/",
         routes: {
           '/': (context) => Splash(),
