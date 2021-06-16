@@ -36,7 +36,7 @@ class _AddProductState extends State<AddProduct>
           "اضف عرض",
 
         ),
-        backgroundColor: Colors.red.shade800,
+        backgroundColor: Color(0xff02ab94),
         elevation: 0.4,
         leading: IconButton(
             icon: Icon(
@@ -152,7 +152,7 @@ class _AddProductState extends State<AddProduct>
                     child: RaisedButton(
                       onPressed: uploadimages,
                       child: Text("اضافة"),
-                      color: Colors.red.shade800,
+                      color: Color(0xff02ab94),
                       textColor: Colors.white,
                     ),
                   ),

@@ -41,6 +41,7 @@ dependencies:
   image_picker: ^0.6.1+8
   flutter_typeahead: ^1.7.0
   firebase_storage: ^3.0.6
+  dotted_border: ^2.0.0
   uuid:
   url_launcher:
   faker:

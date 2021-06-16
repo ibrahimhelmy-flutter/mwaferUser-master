@@ -24,6 +24,7 @@ class _CategoryProductState extends State<CategoryProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+
           title: Text(
             widget.CatName,
             style: GoogleFonts.lobster(
@@ -31,7 +32,7 @@ class _CategoryProductState extends State<CategoryProduct> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: Colors.red[900],
+          backgroundColor: Color(0xff02ab94),
         ),
         body: Column(
           children: [
@@ -134,7 +135,7 @@ class ProductItem extends StatelessWidget {
           Text(
             _documentSnapshot['name'],
             style: GoogleFonts.athiti(
-                fontSize: 17, fontWeight: FontWeight.bold, color: Colors.red),
+                fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xff02ab94)),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 25),
@@ -168,7 +169,7 @@ class ProductItem extends StatelessWidget {
                 "نسخ الكود",
                 style: TextStyle(color: Colors.white),
               ),
-              color: Colors.red[800],
+              color: Color(0xff02ab94),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25)),
             ),

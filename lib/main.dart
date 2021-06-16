@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.red.shade800,
+      statusBarColor: Color(0xff02ab94),
     ));
     _firebaseMessaging.getToken();
 

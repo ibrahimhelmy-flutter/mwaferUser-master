@@ -19,15 +19,15 @@ class _HomePageState extends State<HomePage> {
         title: Text("وفر قريشاتك",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: 25,
             )),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Colors.red[900],
+          color:Color(0xff02ab94),
           onPressed: () {},
         ),
         elevation: 10,
-        backgroundColor: Colors.red[900],
+        backgroundColor: Color(0xff02ab94),
       ),
       body: Container(
         child: Center(

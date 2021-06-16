@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class BuildProductRow extends StatelessWidget {
   String txt; String img;
-  BuildProductRow(this.txt, this.img);
+  String des;
+  BuildProductRow(this.txt, this.img, this.des);
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +41,16 @@ class BuildProductRow extends StatelessWidget {
                       SizedBox(
                           height: 3.0
                       ),
-                      FittedBox(
-                        child: Text(
-                          "عروض الصيف خصم حتى 50% على جميع الكوبونات",
-                          style: TextStyle(color: Colors.black, fontSize: 18.0,fontWeight: FontWeight.w500),
-                        ),
+                      Text(
+                        des==null?"":des,
+                        style: TextStyle(color: Colors.black, fontSize: 18.0,fontWeight: FontWeight.w500),
                       ), SizedBox(
                           height: 3.0
                       ),
-                      Text(
-                        "الفترة من اول يناير حتى منتصف مارس ",
-                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
-                      ),
+                      // Text(
+                      //   "الفترة من اول يناير حتى منتصف مارس ",
+                      //   style: TextStyle(color: Colors.grey, fontSize: 14.0),
+                      // ),
                     ],
                   ),
                 ),

@@ -78,7 +78,7 @@ class _OffersState extends State<Offers> {
                           title: Text(
                             "عروض و تخفيضات",
                             style: GoogleFonts.athiti(
-                                color: Colors.red[900],
+                                color: Color(0xff02ab94),
                                 fontSize: 26,
                                 fontWeight: FontWeight.bold),
                             textAlign: TextAlign.right,
@@ -102,7 +102,7 @@ class _OffersState extends State<Offers> {
                                   },
                                   icon: Icon(
                                     Icons.arrow_back_rounded,
-                                    color: Colors.red,
+                                    color: Color(0xff02ab94),
                                     size: 50,
                                   )),
                             ],
@@ -148,7 +148,8 @@ class _OffersState extends State<Offers> {
                                       img: snapshot.data[index]["images url"]
                                           [0],
                                       txt: snapshot.data[index]["name"],
-                                      des: snapshot.data[index]['des'],
+                                      des: snapshot.data[index]['description'],
+                                      mUrl:snapshot.data[index]['price'],
                                     );
                                   });
 
@@ -271,9 +272,9 @@ class _OffersState extends State<Offers> {
             hintText: "Search ",
             icon: Icon(
               Icons.search,
-              color: Colors.red[900],
+              color: Color(0xff02ab94),
             ),
-            hintStyle: TextStyle(color: Colors.red[900])),
+            hintStyle: TextStyle(color: Color(0xff02ab94))),
         autofocus: false,
       ),
       suggestionsCallback: (pattern) async {
@@ -310,14 +311,15 @@ class _OffersState extends State<Offers> {
         // );
         //
 
-     return   BuildProductRow(suggestion["name"],suggestion["images url"][0]);
+    // return   BuildProductRow(suggestion["name"],suggestion["images url"][0],suggestion["description"]);
 
-        // return MyOfferCard(
-        //   img: suggestion["images url"]
-        //   [0],
-        //   txt: suggestion["name"],
-        //   des: suggestion['des'],
-        // );
+        return MyOfferCard(
+          img: suggestion["images url"]
+          [0],
+          txt: suggestion["name"],
+          des: suggestion['description'],
+          mUrl:suggestion['price'] ,
+        );
 
 
       },
@@ -351,7 +353,7 @@ class _OffersState extends State<Offers> {
                     children: [
                       Expanded(
                         child: RaisedButton(
-                          color: Colors.red,
+                          color: Color(0xff02ab94),
                           child: Text(
                             'Delete',
                             style: TextStyle(color: Colors.grey[200]),
@@ -367,7 +369,7 @@ class _OffersState extends State<Offers> {
                       ),
                       Expanded(
                         child: RaisedButton(
-                          color: Colors.red,
+                          color: Color(0xff02ab94),
                           child: Text(
                             'Not now',
                             style: TextStyle(color: Colors.grey[200]),
@@ -430,8 +432,9 @@ class MyOfferCard extends StatefulWidget {
   final String img;
   final String txt;
   final String des;
+  final String mUrl;
 
-  const MyOfferCard({Key key, this.img, this.txt, this.des}) : super(key: key);
+  const MyOfferCard({Key key, this.img, this.txt, this.des, this.mUrl}) : super(key: key);
 
   @override
   _MyOfferCardState createState() => _MyOfferCardState();
@@ -445,9 +448,9 @@ class _MyOfferCardState extends State<MyOfferCard> {
     return InkWell(
       onTap: () =>
 
-        launch(widget.img)
+        launch(widget.mUrl)
      ,
-      child: BuildProductRow(widget.txt,widget.img),
+      child: BuildProductRow(widget.txt,widget.img,widget.des),
     );
 
   }
