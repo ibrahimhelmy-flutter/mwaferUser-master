@@ -108,7 +108,17 @@ class _CategoriesState extends State<Categories> {
             catDes: suggestion['catDes'],
             categorie: suggestion['category'],
             docId: suggestion.documentID,
+              copUrl: suggestion["copUrl"]
           );
+
+
+
+
+
+
+
+
+
 
           // title: Row(
           // children:
@@ -298,12 +308,19 @@ class _MyCardState extends State<MyCard> {
         .collection('coupons')
         .where("category",
         isEqualTo: widget.docId)
-        .getDocuments();
-    DocumentSnapshot snapshot = querytSnapshot
-        .documents[0];
- setState(() {
-   code = snapshot['price'];
- });
+        .getDocuments().then((event) {
+      if (event.documents.isNotEmpty) {
+        Map<String, dynamic> documentData = event.documents.single.data; //if it is a single document
+        code = documentData['price'];
+      }
+    }).catchError((e) => print("error fetching data: $e"));
+
+
+   //  DocumentSnapshot snapshot = querytSnapshot
+   //      .documents[0];
+   //
+   // code = snapshot['price'];
+
     return code;
   }
 
@@ -346,14 +363,14 @@ class _MyCardState extends State<MyCard> {
                     child: AnimatedButton(
                       initialText: "انسخ الكود ",
                       onTap: () {
-                        setState(() async {
+                        // setState(() async {
 
 
-                          FlutterClipboard.copy(code);
+                          FlutterClipboard.copy(code.isNotEmpty?code:"empty");
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text(code.isNotEmpty?"تم نسخ الكود ":"لا يوجد كود"),
                             duration: Duration(seconds: 1),));
-                        });
+                        // });
                       },
                       animationDuration: Duration(seconds: 1),
                       finalText

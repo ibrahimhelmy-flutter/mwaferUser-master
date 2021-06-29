@@ -4,12 +4,12 @@ import 'dart:core';
 import 'package:uuid/uuid.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-class ProductDatabase
-{
+
+class ProductDatabase {
   Firestore _firestore = Firestore.instance;
+
   // start upload images
-  Future<List<String>> uploadimages(File imgfile1, String productName) async
-  {
+  Future<List<String>> uploadimages(File imgfile1, String productName) async {
     List<String> uploadedimages = [];
     var id1 = Uuid();
 
@@ -26,50 +26,47 @@ class ProductDatabase
 
     imgurl1 = await snapshot1.ref.getDownloadURL();
 
-    uploadedimages = [imgurl1,];
+    uploadedimages = [
+      imgurl1,
+    ];
     return uploadedimages;
   }
+
   // end upload images
   //**************************************************************
   // start upload product
   void uploadProduct(
-      String name,
-      String description,
-
-      String price,
-      List<String> imgsurl,
-      )
-  {
+    String name,
+    String description,
+    String price,
+    List<String> imgsurl,
+  ) {
     var id = Uuid();
     String productid = id.v1();
     try {
       _firestore.collection('products').document(productid).setData({
         'name': name,
         "description": description,
-
         "price": price,
         "images url": imgsurl,
       });
-    }catch (e) {
-    }
+    } catch (e) {}
   }
+
   // end upload product
   //**************************************************************
- // start update product
+  // start update product
   void updateProduct(
-      String productid,
-      String name,
-      String description,
-
-      String price,
-
-      List<String> imgsurl,
-      ) {
+    String productid,
+    String name,
+    String description,
+    String price,
+    List<String> imgsurl,
+  ) {
     try {
       _firestore.collection('products').document(productid).setData({
         'name': name,
         "description": description,
-
         "price": price,
         "images url": imgsurl,
       });
@@ -77,20 +74,20 @@ class ProductDatabase
       Fluttertoast.showToast(msg: e.toString());
     }
   }
+
   // end update product
   //**************************************************************
   // start getAll products
-  Future<List<DocumentSnapshot>> getallproducts() async
-  {
+  Future<List<DocumentSnapshot>> getallproducts() async {
     List<DocumentSnapshot> documentSnapshot;
 
-
-      QuerySnapshot querytSnapshot =
-      await Firestore.instance.collection("products").getDocuments();
-      documentSnapshot = querytSnapshot.documents;
+    QuerySnapshot querytSnapshot =
+        await Firestore.instance.collection("products").getDocuments();
+    documentSnapshot = querytSnapshot.documents;
 
     return documentSnapshot;
   }
+
   // end getAll products
   //****************************************************************
   // start get suggestions
@@ -102,31 +99,33 @@ class ProductDatabase
   //   return querytSnapshot.documents;
   // }
 
-  Future<List<DocumentSnapshot>> getSuggestions(String pattern) async
-  {
+  Future<List<DocumentSnapshot>> getSuggestions(String pattern) async {
     List<DocumentSnapshot> documentSnapshot;
-    QuerySnapshot querytSnapshot = await Firestore.instance.collection("products").where("name",isEqualTo: pattern).getDocuments();
- //   documentSnapshot = querytSnapshot.documents;
+    QuerySnapshot querytSnapshot = await Firestore.instance
+        .collection("products")
+        .where("name", isGreaterThanOrEqualTo: pattern)
+        .where('name', isLessThan: pattern +'ي')
+        .getDocuments();
+    //   documentSnapshot = querytSnapshot.documents;
     return querytSnapshot.documents;
   }
 
   // end get suggestions
   //****************************************************************
   // start delete products
-  void deleteproducts(List<String> products) async
-  {
+  void deleteproducts(List<String> products) async {
     for (String id in products) {
       await Firestore.instance.collection("products").document(id).delete();
     }
   }
+
   // end delete products
   //****************************************************************
   // start get product count
-  Future<int> productCount() async
-  {
+  Future<int> productCount() async {
     int count = 0;
     await getallproducts().then((value) => count = value.length);
     return count;
   }
-  // end get product count
+// end get product count
 }
